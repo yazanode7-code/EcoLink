@@ -6,38 +6,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EcoLink.Models;
 
-/// <summary>
-/// المستخدم — Email و PasswordHash و PhoneNumber و UserName جايين من IdentityUser.
-/// الأدوار (Admin / BranchEmployee / Factory / Driver) من جداول Identity.
-/// </summary>
 public class ApplicationUser : IdentityUser<int>, IAuditable
 {
-    [Required(ErrorMessage = "الاسم مطلوب")]
+    [Required(ErrorMessage = "Full name is required")]
     [StringLength(255)]
-    [Display(Name = "الاسم الكامل")]
+    [Display(Name = "Full Name")]
     public string FullName { get; set; } = string.Empty;
 
-    // لموظف الجامعة
-    [Display(Name = "الفرع")]
+    [Display(Name = "Branch")]
     public int? BranchId { get; set; }
 
     [ForeignKey(nameof(BranchId))]
     [DeleteBehavior(DeleteBehavior.Restrict)]
     public Branch? Branch { get; set; }
 
-    // لحساب المصنع والسواقين
-    [Display(Name = "المصنع")]
+    [Display(Name = "Factory")]
     public int? FactoryId { get; set; }
 
     [ForeignKey(nameof(FactoryId))]
     [DeleteBehavior(DeleteBehavior.Restrict)]
     public Factory? Factory { get; set; }
 
-    // IAuditable
-    [Display(Name = "تاريخ الإنشاء")]
+    public Driver? DriverProfile { get; set; }
+
+    [Display(Name = "Created At")]
     public DateTime CreatedAt { get; set; }
 
-    [Display(Name = "تاريخ التعديل")]
+    [Display(Name = "Updated At")]
     public DateTime? UpdatedAt { get; set; }
 
     public bool IsDeleted { get; set; }

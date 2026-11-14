@@ -5,38 +5,35 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EcoLink.Models;
 
-/// <summary>
-/// منتجات المصنع اللي بتنشرى بالنقاط.
-/// </summary>
 public class FactoryProduct : BaseEntity
 {
     [Required]
-    [Display(Name = "المصنع")]
+    [Display(Name = "Factory")]
     public int FactoryId { get; set; }
 
     [ForeignKey(nameof(FactoryId))]
     [DeleteBehavior(DeleteBehavior.Restrict)]
     public Factory Factory { get; set; } = null!;
 
-    [Required(ErrorMessage = "اسم المنتج مطلوب")]
+    [Required(ErrorMessage = "Product name is required")]
     [StringLength(255)]
-    [Display(Name = "اسم المنتج")]
+    [Display(Name = "Product Name")]
     public string Name { get; set; } = string.Empty;
 
-    [Display(Name = "الوصف")]
+    [Display(Name = "Description")]
     public string? Description { get; set; }
 
     [Required]
-    [Range(1, int.MaxValue, ErrorMessage = "السعر لازم يكون أكبر من صفر")]
-    [Display(Name = "السعر بالنقاط")]
+    [Range(1, int.MaxValue, ErrorMessage = "Points cost must be greater than zero")]
+    [Display(Name = "Points Cost")]
     public int PointsCost { get; set; }
 
     [Required]
-    [Range(0, int.MaxValue, ErrorMessage = "الكمية ما بتكون سالبة")]
-    [Display(Name = "الكمية المتوفرة")]
+    [Range(0, int.MaxValue, ErrorMessage = "Stock quantity cannot be negative")]
+    [Display(Name = "Stock Quantity")]
     public int StockQuantity { get; set; }
 
-    [Display(Name = "مفعّل")]
+    [Display(Name = "Active")]
     public bool IsActive { get; set; } = true;
 
     public ICollection<RewardOrder> RewardOrders { get; set; } = new List<RewardOrder>();

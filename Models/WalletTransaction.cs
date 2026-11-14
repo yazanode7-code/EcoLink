@@ -6,9 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EcoLink.Models;
 
-/// <summary>
-/// سجل حركات المحفظة — موجب = إضافة، سالب = خصم.
-/// </summary>
 public class WalletTransaction : BaseEntity
 {
     [Required]
@@ -19,22 +16,20 @@ public class WalletTransaction : BaseEntity
     public Wallet Wallet { get; set; } = null!;
 
     [Required]
-    [Display(Name = "عدد النقاط")]
+    [Display(Name = "Amount")]
     public int Amount { get; set; }
 
     [Required]
-    [Column(TypeName = "nvarchar(50)")]   // بيخزن الـ enum كنص
-    [Display(Name = "نوع الحركة")]
+    [Column(TypeName = "nvarchar(50)")]
+    [Display(Name = "Type")]
     public WalletTransactionType Type { get; set; }
 
-    // إذا الحركة جاية من تسليم مواد
     public int? PickupRequestId { get; set; }
 
     [ForeignKey(nameof(PickupRequestId))]
     [DeleteBehavior(DeleteBehavior.Restrict)]
     public PickupRequest? PickupRequest { get; set; }
 
-    // إذا الحركة راحت على مكافأة
     public int? RewardOrderId { get; set; }
 
     [ForeignKey(nameof(RewardOrderId))]

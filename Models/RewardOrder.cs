@@ -6,31 +6,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EcoLink.Models;
 
-/// <summary>
-/// طلب مكافأة — من المصنع للجامعة.
-/// CreatedAt (من BaseEntity) = تاريخ الطلب.
-/// </summary>
 public class RewardOrder : BaseEntity
 {
     [Required]
-    [Display(Name = "الفرع")]
+    [Display(Name = "Branch")]
     public int BranchId { get; set; }
 
     [ForeignKey(nameof(BranchId))]
     [DeleteBehavior(DeleteBehavior.Restrict)]
     public Branch Branch { get; set; } = null!;
 
-    // موظف الجامعة اللي طلب
     [Required]
-    [Display(Name = "مقدّم الطلب")]
+    [Display(Name = "Requested By")]
     public int RequestedByEmployeeId { get; set; }
 
     [ForeignKey(nameof(RequestedByEmployeeId))]
     [DeleteBehavior(DeleteBehavior.Restrict)]
     public ApplicationUser RequestedByEmployee { get; set; } = null!;
 
-    [Required(ErrorMessage = "المنتج مطلوب")]
-    [Display(Name = "المنتج")]
+    [Required(ErrorMessage = "Product is required")]
+    [Display(Name = "Product")]
     public int ProductId { get; set; }
 
     [ForeignKey(nameof(ProductId))]
@@ -38,17 +33,15 @@ public class RewardOrder : BaseEntity
     public FactoryProduct Product { get; set; } = null!;
 
     [Required]
-    [Range(1, 1000, ErrorMessage = "الكمية غير صحيحة")]
-    [Display(Name = "الكمية")]
+    [Range(1, 1000, ErrorMessage = "Invalid quantity")]
+    [Display(Name = "Quantity")]
     public int Quantity { get; set; } = 1;
 
-    // Snapshot لسعر المنتج وقت الطلب
     [Required]
-    [Display(Name = "النقاط المصروفة")]
+    [Display(Name = "Points Spent")]
     public int PointsSpent { get; set; }
 
-    // سواق المصنع
-    [Display(Name = "السائق")]
+    [Display(Name = "Driver")]
     public int? DriverId { get; set; }
 
     [ForeignKey(nameof(DriverId))]
@@ -56,10 +49,10 @@ public class RewardOrder : BaseEntity
     public ApplicationUser? Driver { get; set; }
 
     [Required]
-    [Column(TypeName = "nvarchar(50)")]   // بيخزن الـ enum كنص
-    [Display(Name = "الحالة")]
+    [Column(TypeName = "nvarchar(50)")]
+    [Display(Name = "Status")]
     public RewardOrderStatus Status { get; set; } = RewardOrderStatus.Pending;
 
-    [Display(Name = "تاريخ التسليم")]
+    [Display(Name = "Delivered Date")]
     public DateTime? DeliveredDate { get; set; }
 }

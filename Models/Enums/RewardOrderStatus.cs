@@ -4,9 +4,9 @@ namespace EcoLink.Models.Enums;
 
 public enum RewardOrderStatus
 {
-    [Display(Name = "بانتظار الموافقة")] Pending,
-    [Display(Name = "تمت الموافقة")]    Approved,
-    [Display(Name = "قيد التوصيل")]     OutForDelivery,
-    [Display(Name = "تم التسليم")]      Delivered,
-    [Display(Name = "مرفوض")]          Rejected
+    [Display(Name = "Pending")] Pending,
+    [Display(Name = "Approved")] Approved,
+    [Display(Name = "Out for Delivery")] OutForDelivery,
+    [Display(Name = "Delivered")] Delivered,
+    [Display(Name = "Rejected")] Rejected
 }

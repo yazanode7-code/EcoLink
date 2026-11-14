@@ -6,38 +6,32 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EcoLink.Models;
 
-/// <summary>
-/// طلب تفريغ سلة — من الجامعة للمصنع.
-/// CreatedAt (من BaseEntity) = تاريخ الطلب.
-/// </summary>
 public class PickupRequest : BaseEntity
 {
     [Required]
-    [Display(Name = "السلة")]
+    [Display(Name = "Bin")]
     public int BinId { get; set; }
 
     [ForeignKey(nameof(BinId))]
     [DeleteBehavior(DeleteBehavior.Restrict)]
     public Bin Bin { get; set; } = null!;
 
-    // موظف الجامعة اللي بلّغ
     [Required]
-    [Display(Name = "المبلّغ")]
+    [Display(Name = "Reported By")]
     public int ReportedByEmployeeId { get; set; }
 
     [ForeignKey(nameof(ReportedByEmployeeId))]
     [DeleteBehavior(DeleteBehavior.Restrict)]
     public ApplicationUser ReportedByEmployee { get; set; } = null!;
 
-    [Display(Name = "المصنع")]
+    [Display(Name = "Factory")]
     public int? FactoryId { get; set; }
 
     [ForeignKey(nameof(FactoryId))]
     [DeleteBehavior(DeleteBehavior.Restrict)]
     public Factory? Factory { get; set; }
 
-    // سواق المصنع
-    [Display(Name = "السائق")]
+    [Display(Name = "Driver")]
     public int? DriverId { get; set; }
 
     [ForeignKey(nameof(DriverId))]
@@ -45,22 +39,21 @@ public class PickupRequest : BaseEntity
     public ApplicationUser? Driver { get; set; }
 
     [Required]
-    [Column(TypeName = "nvarchar(50)")]   // بيخزن الـ enum كنص
-    [Display(Name = "الحالة")]
+    [Column(TypeName = "nvarchar(50)")]
+    [Display(Name = "Status")]
     public PickupStatus Status { get; set; } = PickupStatus.Pending;
 
     [Column(TypeName = "decimal(18,2)")]
-    [Range(0.01, 100000, ErrorMessage = "الوزن غير صحيح")]
-    [Display(Name = "الوزن الفعلي (كغ)")]
+    [Range(0.01, 100000, ErrorMessage = "Invalid weight")]
+    [Display(Name = "Actual Weight (kg)")]
     public decimal? ActualWeight { get; set; }
 
-    // Snapshot لسعر المادة وقت الاستلام
-    [Display(Name = "نقاط لكل كيلو")]
+    [Display(Name = "Points per Kg")]
     public int? PointsPerKgAtPickup { get; set; }
 
-    [Display(Name = "النقاط المكتسبة")]
+    [Display(Name = "Points Earned")]
     public int PointsEarned { get; set; }
 
-    [Display(Name = "تاريخ الإنجاز")]
+    [Display(Name = "Completed Date")]
     public DateTime? CompletedDate { get; set; }
 }

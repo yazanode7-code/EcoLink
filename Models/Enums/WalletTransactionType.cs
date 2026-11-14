@@ -4,7 +4,7 @@ namespace EcoLink.Models.Enums;
 
 public enum WalletTransactionType
 {
-    [Display(Name = "نقاط مكتسبة")] Earned,
-    [Display(Name = "نقاط مصروفة")] Spent,
-    [Display(Name = "نقاط مستردة")] Refund
+    [Display(Name = "Earned")] Earned,
+    [Display(Name = "Spent")] Spent,
+    [Display(Name = "Refund")] Refund
 }

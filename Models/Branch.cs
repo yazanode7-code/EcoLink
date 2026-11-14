@@ -3,18 +3,15 @@ using EcoLink.Models.Common;
 
 namespace EcoLink.Models;
 
-/// <summary>
-/// فرع من فروع جامعة البلقاء التطبيقية.
-/// </summary>
 public class Branch : BaseEntity
 {
-    [Required(ErrorMessage = "اسم الفرع مطلوب")]
+    [Required(ErrorMessage = "Branch name is required")]
     [StringLength(255)]
-    [Display(Name = "اسم الفرع")]
+    [Display(Name = "Branch Name")]
     public string Name { get; set; } = string.Empty;
 
     [StringLength(500)]
-    [Display(Name = "العنوان")]
+    [Display(Name = "Address")]
     public string? Address { get; set; }
 
     public Wallet? Wallet { get; set; }

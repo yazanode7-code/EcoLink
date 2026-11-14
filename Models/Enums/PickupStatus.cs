@@ -4,9 +4,9 @@ namespace EcoLink.Models.Enums;
 
 public enum PickupStatus
 {
-    [Display(Name = "بانتظار المراجعة")] Pending,
-    [Display(Name = "تم تعيين سائق")]   Assigned,
-    [Display(Name = "تم الاستلام")]     PickedUp,
-    [Display(Name = "مكتمل")]          Completed,
-    [Display(Name = "ملغي")]           Cancelled
+    [Display(Name = "Pending")] Pending,
+    [Display(Name = "Driver Assigned")] Assigned,
+    [Display(Name = "Picked Up")] PickedUp,
+    [Display(Name = "Completed")] Completed,
+    [Display(Name = "Cancelled")] Cancelled
 }
