@@ -379,6 +379,9 @@ namespace EcoLink.Migrations
                     b.Property<int?>("DriverId")
                         .HasColumnType("int");
 
+                    b.Property<decimal?>("DriverWeight")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int?>("FactoryId")
                         .HasColumnType("int");
 

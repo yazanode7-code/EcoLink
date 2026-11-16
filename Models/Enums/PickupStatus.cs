@@ -6,7 +6,7 @@ public enum PickupStatus
 {
     [Display(Name = "Pending")] Pending,
     [Display(Name = "Driver Assigned")] Assigned,
-    [Display(Name = "Picked Up")] PickedUp,
+    [Display(Name = "Awaiting Confirmation")] Collected,
     [Display(Name = "Completed")] Completed,
     [Display(Name = "Cancelled")] Cancelled
 }

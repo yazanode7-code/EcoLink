@@ -48,6 +48,11 @@ public class PickupRequest : BaseEntity
     [Display(Name = "Actual Weight (kg)")]
     public decimal? ActualWeight { get; set; }
 
+    [Column(TypeName = "decimal(18,2)")]
+    [Range(0.01, 100000, ErrorMessage = "Invalid weight")]
+    [Display(Name = "Driver Weight (kg)")]
+    public decimal? DriverWeight { get; set; }
+
     [Display(Name = "Points per Kg")]
     public int? PointsPerKgAtPickup { get; set; }
 
