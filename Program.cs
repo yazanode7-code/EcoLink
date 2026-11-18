@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using static System.Formats.Asn1.AsnWriter;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,16 +36,21 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<int>>(options =>
 
 builder.Services.ConfigureApplicationCookie(options =>
 { options.LoginPath = "/Account/Login";
-  options.ExpireTimeSpan = TimeSpan.FromSeconds(30);
+  options.ExpireTimeSpan = TimeSpan.FromSeconds(60);
  options.SlidingExpiration =true;
+    options.AccessDeniedPath = "/Accont/AccessDenied";
 });
 
 var app = builder.Build();
-using var scope = app.Services.CreateScope();
-var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
-var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-await DbSeeder.SeedAsync(roleManager, userManager, app.Configuration);
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+    await DbSeeder.SeedAsync(roleManager, userManager, app.Configuration);
+}
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
