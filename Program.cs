@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using static System.Formats.Asn1.AsnWriter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,11 +20,32 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<int>>(options =>
     options.Password.RequiredLength = 8;
     options.Password.RequireNonAlphanumeric = false;
     options.User.RequireUniqueEmail = true;
+
+
+    //for lockout 
+    options.Lockout.MaxFailedAccessAttempts = 3;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(30);
+    options.Lockout.AllowedForNewUsers = true;
+
+  
+
+
+
 })
     .AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
-var app = builder.Build();
+builder.Services.ConfigureApplicationCookie(options =>
+{ options.LoginPath = "/Account/Login";
+  options.ExpireTimeSpan = TimeSpan.FromSeconds(30);
+ options.SlidingExpiration =true;
+});
 
+var app = builder.Build();
+using var scope = app.Services.CreateScope();
+var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
+var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+await DbSeeder.SeedAsync(roleManager, userManager, app.Configuration);
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

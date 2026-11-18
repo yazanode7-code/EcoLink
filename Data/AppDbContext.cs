@@ -6,10 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EcoLink.Data
 {
-    public class AppDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
+    public class AppDbContext:IdentityDbContext<ApplicationUser,IdentityRole<int>,int>
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+       public AppDbContext(DbContextOptions<AppDbContext> option):base(option)
         {
+
         }
 
         public virtual  DbSet<Branch> Branches { get; set; }
