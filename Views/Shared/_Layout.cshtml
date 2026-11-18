@@ -30,6 +30,15 @@
             </div>
         </nav>
     </header>
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <div class="d-flex align-items-center gap-3">
+            <span class="text-muted small">@User.Identity.Name</span>
+            <form asp-controller="Account" asp-action="Logout" method="post" class="m-0">
+                <button type="submit" class="btn btn-sm btn-outline-danger">Logout</button>
+            </form>
+        </div>
+    }
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
