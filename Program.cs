@@ -1,3 +1,4 @@
+using EcoLink.Constants;
 using EcoLink.Data;
 using EcoLink.Models;
 using Microsoft.AspNetCore.Identity;
@@ -38,7 +39,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 { options.LoginPath = "/Account/Login";
   options.ExpireTimeSpan = TimeSpan.FromHours(1);
  options.SlidingExpiration =true;
-    options.AccessDeniedPath = "/Accont/AccessDenied";
+    options.AccessDeniedPath = "/Account/AccessDenied";
 });
 
 var app = builder.Build();
@@ -48,7 +49,7 @@ using (var scope = app.Services.CreateScope())
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-    await DbSeeder.SeedAsync(roleManager, userManager, app.Configuration);
+    await DbSeeder.SeedAsync(roleManager, userManager, app.Configuration,app.Environment.IsDevelopment());
 }
 
 // Configure the HTTP request pipeline.
@@ -64,6 +65,5 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
+pattern: "{controller=Account}/{action=Login}/{id?}");
 app.Run();

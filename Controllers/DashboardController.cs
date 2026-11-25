@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using EcoLink.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcoLink.Controllers;
@@ -6,25 +7,25 @@ namespace EcoLink.Controllers;
 [Authorize]
 public class DashboardController : Controller
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = AppRoles.Admin)]
     public IActionResult Admin()
     {
         return View();
     }
 
-    [Authorize(Roles = "BranchEmployee")]
+    [Authorize(Roles = AppRoles.BranchEmployee)]
     public IActionResult Employee()
     {
         return View();
     }
 
-    [Authorize(Roles = "Factory")]
+    [Authorize(Roles = AppRoles.Factory)]
     public IActionResult Factory()
     {
         return View();
     }
 
-    [Authorize(Roles = "Driver")]
+    [Authorize(Roles = AppRoles.Driver)]
     public IActionResult Driver()
     {
         return View();

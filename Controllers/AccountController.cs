@@ -1,4 +1,5 @@
-﻿using EcoLink.Models;
+﻿using EcoLink.Constants;
+using EcoLink.Models;
 using EcoLink.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -22,7 +23,6 @@ public class AccountController : Controller
     [HttpGet]
     public async Task<IActionResult> Login(string? returnUrl = null)
     {
-        // إذا داخل أصلاً، ما في داعي يشوف صفحة الدخول
         if (User.Identity?.IsAuthenticated == true)
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -84,12 +84,11 @@ public class AccountController : Controller
     {
         var roles = await _userManager.GetRolesAsync(user);
 
-        if (roles.Contains("Admin")) return RedirectToAction("Admin", "Dashboard");
-        if (roles.Contains("BranchEmployee")) return RedirectToAction("Employee", "Dashboard");
-        if (roles.Contains("Factory")) return RedirectToAction("Factory", "Dashboard");
-        if (roles.Contains("Driver")) return RedirectToAction("Driver", "Dashboard");
+        if (roles.Contains(AppRoles.Admin)) return RedirectToAction("Admin", "Dashboard");
+        if (roles.Contains(AppRoles.BranchEmployee)) return RedirectToAction("Employee", "Dashboard");
+        if (roles.Contains(AppRoles.Factory)) return RedirectToAction("Factory", "Dashboard");
+        if (roles.Contains(AppRoles.Driver)) return RedirectToAction("Driver", "Dashboard");
 
-        // مستخدم بدون دور: ما إله مكان بالنظام
         await _signInManager.SignOutAsync();
         return RedirectToAction(nameof(Login));
     }
