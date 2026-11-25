@@ -1,1 +1,94 @@
-﻿
+﻿@model IReadOnlyList<EcoLink.Models.Branch>
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h2 class="mb-4">Admin Dashboard <small class="text-muted fs-6">(Repository Test)</small></h2>
+
+<!-- الأرقام: CountAsync -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h6 class="text-muted">Branches</h6>
+                <h2>@ViewBag.BranchesCount</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h6 class="text-muted">Bins</h6>
+                <h2>@ViewBag.BinsCount</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h6 class="text-muted">Pending Requests</h6>
+                <h2>@ViewBag.PendingCount</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- فورم الإضافة: AddAsync + CompleteAsync -->
+<div class="card mb-4">
+    <div class="card-header">Add Test Branch</div>
+    <div class="card-body">
+        <form asp-action="AddTestBranch" method="post" class="row g-2">
+            <div class="col-md-5">
+                <input name="name" class="form-control" placeholder="Branch name" required />
+            </div>
+            <div class="col-md-5">
+                <input name="address" class="form-control" placeholder="Address (optional)" />
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-success w-100">Add</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- الجدول: GetAllAsync + زر الحذف: GetByIdAsync + Remove -->
+<div class="card">
+    <div class="card-header">Branches (@Model.Count)</div>
+    <div class="card-body p-0">
+        @if (Model.Count == 0)
+        {
+            <p class="text-muted p-3 mb-0">No branches yet. Add one above.</p>
+        }
+        else
+        {
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Created At</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var b in Model)
+                    {
+                        <tr>
+                            <td>@b.Id</td>
+                            <td>@b.Name</td>
+                            <td>@(b.Address ?? "-")</td>
+                            <td>@b.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                            <td>
+                                <form asp-action="DeleteTestBranch" asp-route-id="@b.Id" method="post"
+                                      onsubmit="return confirm('Delete @b.Name?');">
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

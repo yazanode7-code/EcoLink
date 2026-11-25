@@ -1,6 +1,8 @@
 using EcoLink.Constants;
 using EcoLink.Data;
 using EcoLink.Models;
+using EcoLink.Repositories;
+using EcoLink.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,6 +43,10 @@ builder.Services.ConfigureApplicationCookie(options =>
  options.SlidingExpiration =true;
     options.AccessDeniedPath = "/Account/AccessDenied";
 });
+
+
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork >();
 
 var app = builder.Build();
 
